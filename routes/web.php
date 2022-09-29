@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name("home");
+Route::get('/', '\App\Http\Controllers\HomeController@index')->name('home');
 
-Route::get('/login', function () {
-    return "asd";
-})->name('login');
+Route::get('/add', [\App\Http\Controllers\HomeController::class, 'addProduct']);
+
+Route::post('/save', '\App\Http\Controllers\HomeController@saveProduct');

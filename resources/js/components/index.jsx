@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ReactDOM from "react-dom";
+import axios from "axios";
 import ProductTable from "./ProductTable";
+import AddProduct from "./addProduct";
 import "../../css/app.css";
+import { set } from "lodash";
 
 const App = (props) => {
     const columnsTR = useMemo(
@@ -80,45 +83,93 @@ const App = (props) => {
         []
     );
 
-    const [products, setProducts] = useState([]);
+    const [productstr, setProductstr] = useState([]);
     const [lang, setLang] = useState("tr");
     const [columns, setColumns] = useState(columnsTR);
+    const [productsen, setProductsen] = useState([]);
+    const [TRY, setTRY] = useState("true");
+    const [data, setData] = useState([]);
+    const [usd, setUsd] = useState(18);
 
     const getData = () => {
-        setProducts(JSON.parse(props.products));
+        setProductstr(JSON.parse(props.products));
+        setProductsen(JSON.parse(props.products));
+        productsen.map((product) => {
+            product.price = (product.price / usd).toFixed(2);
+            product.wholesale_price = (product.wholesale_price / usd).toFixed(
+                2
+            );
+        });
     };
 
     const langChange = (value) => {
         value === "tr" ? setColumns(columnsTR) : setColumns(columnsENG);
     };
 
+    const getCurrency = () => {
+        const options = {
+            method: "GET",
+            url: "https://currencyscoop.p.rapidapi.com/latest",
+            headers: {
+                "X-RapidAPI-Key":
+                    "4ac44842a0msh6cca32579977d63p1cf944jsn8c78bb15199c",
+                "X-RapidAPI-Host": "currencyscoop.p.rapidapi.com",
+            },
+        };
+
+        axios
+            .request(options)
+            .then(function (response) {
+                setUsd(response.data.response.rates.TRY);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    };
+
     useEffect(() => {
         getData();
-    }, []);
+        TRY === "true" ? setData(productstr) : setData(productsen);
+    }, [TRY]);
 
     useEffect(() => {
         langChange(lang);
     }, [lang]);
+
+    useEffect(() => {
+        getCurrency();
+    }, [TRY]);
+
+    useEffect(() => {
+        setData(JSON.parse(props.products));
+    }, []);
 
     return (
         <>
             <nav>
                 <div className="container">
                     <div>
-                        <h1>Products</h1>
+                        <h1>
+                            <a href="/">Products</a>
+                        </h1>
                     </div>
                     <div>
-                        <h1>LOREM</h1>
+                        <h1>
+                            <a href="/add">LOREM</a>
+                        </h1>
                     </div>
                 </div>
             </nav>
-
             <div className="table-container">
                 <select name="lang" onChange={(e) => setLang(e.target.value)}>
                     <option value="tr">Türkçe</option>
                     <option value="eng">English</option>
                 </select>
-                <ProductTable columns={columns} data={products} />
+                <ProductTable columns={columns} data={data} tr={TRY} />
+                <select name="lang" onChange={(e) => setTRY(e.target.value)}>
+                    <option value={true}>Türk Lirası</option>
+                    <option value={false}>USD</option>
+                </select>
             </div>
         </>
     );
@@ -131,4 +182,8 @@ if (document.getElementById("app")) {
         <App products={document.getElementById("app").getAttribute("name")} />,
         document.getElementById("app")
     );
+}
+
+if (document.getElementById("addProduct")) {
+    ReactDOM.render(<AddProduct />, document.getElementById("addProduct"));
 }
