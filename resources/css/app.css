@@ -1,14 +1,84 @@
-.container {
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@-webkit-keyframes left-to-right {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 0;
+  }
+}
+@keyframes left-to-right {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 0;
+  }
+}
+@-webkit-keyframes right-to-left {
+  from {
+    right: -100%;
+  }
+  to {
+    right: 0;
+  }
+}
+@keyframes right-to-left {
+  from {
+    right: -100%;
+  }
+  to {
+    right: 0;
+  }
+}
+@-webkit-keyframes bottom-to-up {
+  from {
+    bottom: -300px;
+  }
+  to {
+    bottom: 0;
+  }
+}
+@keyframes bottom-to-up {
+  from {
+    bottom: -300px;
+  }
+  to {
+    bottom: 0;
+  }
+}
+nav .container {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-items: flex-start;
+}
+
+* {
+  font-family: "Noto Sans", sans-serif;
+  letter-spacing: 0.1em;
 }
 
 body {
   margin: 0;
+  background-color: #ffffff !important;
 }
 
 table {
   border-collapse: collapse;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+a {
+  text-decoration: none;
+  color: #ffffff;
+  transition: 0.2s ease-in-out;
+}
+a:hover {
+  color: #ffa726;
 }
 
 table,
@@ -26,20 +96,34 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-} /*# sourceMappingURL=app.css.map */
-.container {
-  background-color: #047aed;
-  justify-content: center;
+  position: relative;
+  margin-bottom: 2em;
+  -webkit-animation-name: bottom-to-up;
+          animation-name: bottom-to-up;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+}
+
+nav {
+  background-color: #66bb6a;
+  border-bottom: #ffffff 1px solid;
+  position: relative;
+  -webkit-animation-name: left-to-right;
+          animation-name: left-to-right;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+}
+nav .container {
   max-width: 1200px;
   height: 100px;
   margin: 0 auto;
   padding: 15px 40px;
 }
-.container div {
-  width: 50%;
+nav .container div {
+  width: 100%;
   text-align: center;
 }
-.container div h1 {
+nav .container div h1 {
   color: #ffffff;
 }
 
@@ -55,4 +139,35 @@ select {
 select:focus, select:hover, select:active {
   outline: 0;
   border-bottom-color: red;
+}
+
+header {
+  background-color: #66bb6a;
+  height: auto;
+  padding: 0 0.5em 7em 0.5em;
+  position: relative;
+  -webkit-animation-name: right-to-left;
+          animation-name: right-to-left;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+}
+header::after {
+  content: "";
+  position: absolute;
+  height: 130px;
+  bottom: -50px;
+  -webkit-animation-name: left-to-right;
+          animation-name: left-to-right;
+  -webkit-animation-duration: 5s;
+          animation-duration: 5s;
+  right: 0;
+  left: 0;
+  background-color: #ffffff;
+  transform: skewY(3deg);
+}
+
+.container .lorem h1 {
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 3.5rem;
 }/*# sourceMappingURL=app.css.map */

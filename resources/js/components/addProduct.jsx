@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import "../../css/ag.css";
 
 const AddProduct = () => {
     const [name, setName] = useState("");
@@ -26,33 +27,32 @@ const AddProduct = () => {
             .catch((error) => {
                 console.log("ERROR:: ", error.response.data);
             });
+        window.location = "/";
     };
 
     return (
-        <div>
-            <form onSubmit={handleForm}>
-                <div>
-                    <label htmlFor="name">Name: </label>
+        <div className="container">
+            <div className="form">
+                <form onSubmit={handleForm} className="add-form">
+                    <label htmlFor="quantity">Name</label>
                     <input
                         id="name"
                         name="name"
                         value={name}
                         type={"text"}
                         onChange={(e) => setName(e.target.value)}
+                        placeholder="Name"
                     ></input>
-                </div>
-                <div>
-                    <label htmlFor="brand">Brand: </label>
+                    <label htmlFor="quantity">Brand</label>
                     <input
                         id="brand"
                         name="brand"
                         value={brand}
                         type={"text"}
                         onChange={(e) => setBrand(e.target.value)}
+                        placeholder="Brand"
                     ></input>
-                </div>
-                <div>
-                    <label htmlFor="price">Price: </label>
+                    <label htmlFor="quantity">Price</label>
                     <input
                         id="price"
                         name="price"
@@ -60,9 +60,7 @@ const AddProduct = () => {
                         type={"number"}
                         onChange={(e) => setPrice(e.target.value)}
                     ></input>
-                </div>
-                <div>
-                    <label htmlFor="wholeprice">Wholesale Price: </label>
+                    <label htmlFor="quantity">Wholesale price </label>
                     <input
                         id="wholeprice"
                         name="wholeprice_price"
@@ -70,9 +68,7 @@ const AddProduct = () => {
                         type={"number"}
                         onChange={(e) => setWholePrice(e.target.value)}
                     ></input>
-                </div>
-                <div>
-                    <label htmlFor="quantity">Quantity: </label>
+                    <label htmlFor="quantity">Quantity</label>
                     <input
                         id="quantity"
                         name="quantity"
@@ -80,11 +76,11 @@ const AddProduct = () => {
                         type={"number"}
                         onChange={(e) => setQuantity(e.target.value)}
                     ></input>
-                </div>
-                <div>
-                    <button type={"submit"}>Save</button>
-                </div>
-            </form>
+                    <button type="submit" className="btn">
+                        Add Product
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };
